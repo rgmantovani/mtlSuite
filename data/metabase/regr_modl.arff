@@ -18,7 +18,7 @@
 @attribute attribute_max numeric
 @attribute attribute_mean numeric
 @attribute attribute_sd numeric
-@attribute Target numeric
+@attribute labels$CART.defaults.perf numeric
 
 @data
 1455_acute-inflammations,2,3,0.333333,0.016667,0.333333,2,2,2,0,2,3,2.666667,0.57735,0,1,0.333333,0.516398,0.981333
