@@ -4,7 +4,9 @@
 mlr::configureMlr(on.learner.error = "warn")
 mlr::configureMlr(show.info = TRUE)
 
-AVAILABLE.ALGOS = c("svm", "J48", "rpart", "randomForest")
+AVAILABLE.REGR = c("regr.svm", "regr.rpart", "regr.randomForest", "regr.kknn", "regr.lm", 
+  "regr.gausspr")
+
 AVAILABLE.TUNNERS = c("irace", "defaults")
 
 INNER_FOLDS = 3

@@ -15,7 +15,7 @@ mainMTL = function(datafile) {
   cat(paste0(" - Datafile: \t", datafile, "\n"))
   cat(" ---------------------------- \n")
 
-  runMetaLearning(datafile = datafile, algo = "regr.randomForest")
+  runMetaLearning(datafile = datafile)
 
   cat("\n - Finished!\n")
   cat(" ---------------------------- \n")
