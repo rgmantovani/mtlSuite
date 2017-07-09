@@ -1,3 +1,14 @@
 .Rproj.user
 .Rhistory
 .RData
+
+data/results/
+data/mfeats/
+
+createMetaBases.R
+testing.R
+
+*.RData
+*.csv
+*.txt
+*.zip
