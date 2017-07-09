@@ -1,9 +1,16 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-runMetaLearning = function(datafile) {
+runMetaLearning = function(datafile, normalization, seed) {
 
-  output.dir = paste("output", datafile, sep = "/")
+  set.seed(seed)
+
+  if(normalization) {
+    output.dir = paste("output", datafile, "with_norm", seed, sep = "/")
+  } else {
+    output.dir = paste("output", datafile, "no_norm", seed, sep = "/")
+  }
+
   if(!dir.exists(output.dir)) {
     dir.create(path = output.dir, recursive = TRUE)
     cat(paste0(" - Creating dir: ", output.dir, "\n"))

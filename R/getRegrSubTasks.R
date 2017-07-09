@@ -6,6 +6,13 @@ getRegrSubTasks = function(datafile, normalization = FALSE) {
   cat(paste0(" @ Loading dataset: ", datafile, "\n"))
   data = foreign::read.arff(paste0("data/metabase/", datafile, ".arff"))
 
+  # data normalization (mean zero, variance one)
+  if(normalization) {
+    for(i in colnames(data)[2:(ncol(data)-4)]) {
+      data[,i] = RSNNS::normalizeData(data[,i], type="norm")
+    }
+  }
+
   sub.data.1 = data[,c(2:(ncol(data)-4), (ncol(data)-3))]
   colnames(sub.data.1)[ncol(sub.data.1)] = "Target"
 
