@@ -1,6 +1,6 @@
 @relation R_data_frame
 
-@attribute id {11_balance-scale,12_mfeat-factors,1455_acute-inflammations,1456_appendicitis,1459_artificial-characters,1460_banana,1462_banknote-authentication,1464_blood-transfusion-service-center,1465_breast-tissue,1473_fertility,1475_first-order-theorem-proving,1479_hill-valley,1480_ilpd,1484_lsvt,1487_ozone-level-8hr,1488_parkinsons,1489_phoneme,1491_one-hundred-plants-margin,1492_one-hundred-plants-shape,1493_one-hundred-plants-texture,1498_sa-heart,1499_seeds,14_mfeat-fourier,1501_semeion,1504_steel-plates-fault,1506_thoracic-surgery,1508_user-knowledge,1512_heart-long-beach,1514_micro-mass,1523_vertebra-column,1526_wall-robot-navigation-v3,1547_autoUniv-au1-1000,1548_autoUniv-au4-2500,1549_autoUniv-au6-750,1551_autoUniv-au6-400,1552_autoUniv-au7-1100,1553_autoUniv-au7-700,1554_autoUniv-au7-500,1555_autoUniv-au6-1000,1560_cardiotocography-v2,1565_heart-h-v3,1568_nursery-v3,15_breast-w,164_molecular-biology-promoters,173_solar-flare,187_wine,210_cloud,21_car,23_cmc,24_mushroom,25_colic,28_optdigits,307_vowel,30_page-blocks,310_mammography,31_credit-g,329_hayes-roth,333_monks-problems-1,334_monks-problems-2,335_monks-problems-3,35_dermatology,36_segment,3_kr-vs-kp,40474_thyroid-allbp,40475_thyroid-allhyper,40496_LED-display-domain-7digit,40499_texture,40733_yeast_v7,40734_satellite_image_v2,40736_libras_move_v2,40_sonar,43_haberman,444_analcatdata_boxing2,448_analcatdata_boxing1,450_analcatdata_lawsuit,458_analcatdata_authorship,461_analcatdata_creditscore,463_backache,469_analcatdata_dmft,475_analcatdata_germangss,48_tae,49_heart-c,51_heart-h,53_heart-statlog,54_vehicle,55_hepatitis,59_ionosphere,61_iris,8_liver-disorders}
+@attribute id {11_balance-scale,12_mfeat-factors,1455_acute-inflammations,1456_appendicitis,1459_artificial-characters,1460_banana,1462_banknote-authentication,1464_blood-transfusion-service-center,1465_breast-tissue,1467_climate-model-simulation-crashes,1473_fertility,1475_first-order-theorem-proving,1479_hill-valley,1480_ilpd,1484_lsvt,1487_ozone-level-8hr,1488_parkinsons,1489_phoneme,1491_one-hundred-plants-margin,1492_one-hundred-plants-shape,1493_one-hundred-plants-texture,1498_sa-heart,1499_seeds,14_mfeat-fourier,1501_semeion,1504_steel-plates-fault,1506_thoracic-surgery,1508_user-knowledge,1512_heart-long-beach,1514_micro-mass,1523_vertebra-column,1526_wall-robot-navigation-v3,1547_autoUniv-au1-1000,1548_autoUniv-au4-2500,1549_autoUniv-au6-750,1551_autoUniv-au6-400,1552_autoUniv-au7-1100,1553_autoUniv-au7-700,1554_autoUniv-au7-500,1555_autoUniv-au6-1000,1560_cardiotocography-v2,1565_heart-h-v3,1568_nursery-v3,15_breast-w,164_molecular-biology-promoters,173_solar-flare,187_wine,210_cloud,21_car,23_cmc,24_mushroom,25_colic,28_optdigits,307_vowel,30_page-blocks,310_mammography,31_credit-g,329_hayes-roth,333_monks-problems-1,334_monks-problems-2,335_monks-problems-3,35_dermatology,36_segment,3_kr-vs-kp,40474_thyroid-allbp,40475_thyroid-allhyper,40496_LED-display-domain-7digit,40499_texture,40733_yeast_v7,40734_satellite_image_v2,40735_ozone_level_v2,40736_libras_move_v2,40_sonar,43_haberman,444_analcatdata_boxing2,448_analcatdata_boxing1,450_analcatdata_lawsuit,458_analcatdata_authorship,461_analcatdata_creditscore,463_backache,469_analcatdata_dmft,475_analcatdata_germangss,48_tae,49_heart-c,51_heart-h,53_heart-statlog,54_vehicle,55_hepatitis,566_meta,59_ionosphere,61_iris,8_liver-disorders}
 @attribute edges numeric
 @attribute degree numeric
 @attribute density numeric
@@ -44,6 +44,7 @@
 8_liver-disorders,2016,11.686957,0.033974,108,0.00001,33.165217,0.138133,0.584153,2.179301,0.628752,0.634467,0.661137,0.652012
 21_car,185235,214.392361,0.124141,1136,0.000001,530.479167,0.259918,0.641878,2.324559,0.817916,0.940237,0.886971,0.940299
 1560_cardiotocography-v2,250324,235.488241,0.110818,1655,0.000001,1375.98777,0.190914,0.756429,3.048691,0.976277,0.976146,0.963405,0.974783
+1467_climate-model-simulation-crashes,21382,79.192593,0.146925,494,0.000035,437.116667,0.263448,0.670642,2.930969,0.634118,0.613362,0.628023,0.613977
 210_cloud,4,0.074074,0.000692,2,0.000087,0,0.010821,0,1,0.299097,0.336528,0.285833,0.337292
 23_cmc,74879,101.668703,0.069068,629,0.000001,486.961303,0.101969,0.699807,3.010936,0.473805,0.523496,0.515674,0.518221
 40_sonar,2482,23.865385,0.115292,111,0.000046,54.615385,0.239549,0.578358,2.051106,0.735396,0.718241,0.721609,0.70687
@@ -68,6 +69,7 @@
 40496_LED-display-domain-7digit,9319,37.276,0.074701,57,0.000004,7.39,0.094792,0.864375,1.412281,0.245,0.263833,0.255889,0.249389
 1484_lsvt,784,12.444444,0.099556,84,0.000147,101.484127,0.184319,0.756645,4.12249,0.715,0.70738,0.760907,0.724088
 310_mammography,12816761,2292.186533,0.204989,10923,0,6954.462577,0.265934,0.7121,2.303561,0.768713,0.78718,0.777865,0.78325
+566_meta,639,2.420455,0.004593,9,0.000004,0.136364,0.011364,0.853448,2.277778,0.025185,0.057569,0.069954,0.067199
 14_mfeat-fourier,141664,141.664,0.070867,200,0,28.764,0.099675,0.873041,1.003467,0.760725,0.763449,0.683757,0.753219
 1514_micro-mass,4973,27.627778,0.076958,36,0.000009,3.736111,0.095528,0.899477,1.077778,0.881944,0.867694,0.858222,0.871722
 164_molecular-biology-promoters,453,8.54717,0.081402,53,0.000132,18.528302,0.334678,0.795089,2.425254,0.786056,0.740611,0.701667,0.729167
@@ -80,6 +82,7 @@
 1568_nursery-v3,7533800,1162.802902,0.089743,4320,0,1495.60017,0.139635,0.536939,1.736474,0.912507,0.991365,0.671428,0.99244
 28_optdigits,1198782,426.612811,0.075923,572,0,67.643238,0.096625,0.875822,1.205669,0.905887,0.905969,0.770093,0.904187
 1487_ozone-level-8hr,566509,447.126283,0.17652,2374,0.000002,1318.328729,0.444656,0.610732,2.181126,0.629044,0.632743,0.604039,0.633013
+40735_ozone_level_v2,656245,517.543375,0.204159,2463,0.000005,938.106861,0.269699,0.459726,1.784052,0.583121,0.580729,0.56259,0.577613
 30_page-blocks,2410349,880.814544,0.160968,4913,0,4833.739631,0.329009,0.766805,3.185013,0.828998,0.790987,0.75225,0.799513
 1488_parkinsons,2495,25.589744,0.131906,147,0.000086,101.092308,0.261527,0.715863,2.535738,0.795968,0.775433,0.792063,0.825667
 1489_phoneme,1897175,702.137306,0.129953,3818,0,1579.020355,0.297209,0.689367,2.030064,0.842833,0.845702,0.758835,0.842151

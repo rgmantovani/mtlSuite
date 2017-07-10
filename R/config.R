@@ -7,13 +7,5 @@ mlr::configureMlr(show.info = TRUE)
 AVAILABLE.REGR = c("regr.svm", "regr.rpart", "regr.randomForest", "regr.kknn", "regr.lm", 
   "regr.gausspr")
 
-AVAILABLE.TUNNERS = c("irace", "defaults")
-
-INNER_FOLDS = 3
-
-POP.SIZE = 10
-
-CONFIG.BUDGET = 100
-
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
