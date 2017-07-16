@@ -5,6 +5,8 @@
 data/results/
 data/mfeats/
 
+analysis/*
+
 createMetaBases.R
 testing.R
 
