@@ -29,12 +29,12 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, seed) {
 
   lrns      = getRegrLearner(algo = algo, feat.sel = feat.sel)
 
-  loo.cv    = makeResampleDesc(method="LOO")
+  loo.cv    = makeResampleDesc(method = "LOO")
 
-  # parallelMap::parallelStartSocket(parallel::detectCores() - 1)
+  parallelMap::parallelStartMultiCore(parallel::detectCores() - 1)
   res = benchmark(learners = lrns, tasks = tasks, resamplings = loo.cv,
     measures = measures, show.info = TRUE, keep.pred = TRUE, models = TRUE)
-  # parallelMap::parallelStop()
+  parallelMap::parallelStop()
 
   print(res)
   save(res, file = job.file)
