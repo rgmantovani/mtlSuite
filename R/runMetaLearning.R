@@ -9,8 +9,8 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, seed) {
 
   # output directory with results
   output.dir = paste("output", datafile, algo, sep="/")
-  output.dir = paste(ifelse(feat.sel, "with_feat", "no_feat"), sep="/")
-  output.dir = paste(ifelse(norm, "with_norm", "no_norm"), sep="/")
+  output.dir = paste(output.dir, ifelse(feat.sel, "with_feat", "no_feat"), sep="/")
+  output.dir = paste(output.dir, ifelse(norm, "with_norm", "no_norm"), sep="/")
   output.dir = paste(output.dir, seed, sep="/")
   
   if(!dir.exists(output.dir)) {
@@ -31,7 +31,7 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, seed) {
 
   loo.cv    = makeResampleDesc(method = "LOO")
 
-  parallelMap::parallelStartMultiCore(parallel::detectCores() - 1)
+  parallelMap::parallelStartMulticore(parallel::detectCores()-1)
   res = benchmark(learners = lrns, tasks = tasks, resamplings = loo.cv,
     measures = measures, show.info = TRUE, keep.pred = TRUE, models = TRUE)
   parallelMap::parallelStop()
