@@ -1,7 +1,6 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 #  Feature selection : sfs - Sequential Forward Selection
-
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
@@ -10,7 +9,7 @@ getRegrLearner = function(algo, feat.sel = FALSE) {
   lrn = makeLearner(algo)
 
   if(feat.sel) {
-    feat.ctrl = makeFeatSelControlSequential(method = "sfs", alpha = 0.01)
+    feat.ctrl = makeFeatSelControlSequential(method = "sfs")
     inner = makeResampleDesc("Holdout")
     
     lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
@@ -27,7 +26,7 @@ getClassifLearner = function(algo, feat.sel = FALSE) {
   lrn = makeLearner(algo, predict.type = "prob")
 
   if(feat.sel) {
-    feat.ctrl = makeFeatSelControlSequential(method = "sfs", alpha = 0.01)
+    feat.ctrl = makeFeatSelControlSequential(method = "sfs")
     inner = makeResampleDesc("Holdout")
     
     lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
