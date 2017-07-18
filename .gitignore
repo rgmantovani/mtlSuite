@@ -7,7 +7,7 @@ data/mfeats/
 
 analysis/*
 
-createMetaBases.R
+createAutoDTMetaBases.R
 testing.R
 
 *.RData
