@@ -37,3 +37,22 @@ getRegrSubTasks = function(datafile, norm = FALSE) {
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
+
+getClassifTask = function(datafile, norm = FALSE) {
+
+  cat(paste0(" @ Loading dataset: ", datafile, "\n"))
+  data = foreign::read.arff(paste0("data/metabase/", datafile, ".arff"))
+
+  # data norm (mean zero, variance one)
+  if(norm) {
+    for(i in colnames(data)[2:(ncol(data)-1)]) {
+      data[,i] = RSNNS::normalizeData(data[,i], type="norm")
+    }
+  }
+
+  task = makeClassifTask(id = datafile, data = data[,-1], target = "Class")
+  return(task)
+}
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------

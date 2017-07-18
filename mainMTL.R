@@ -7,11 +7,20 @@ mainMTL = function(datafile, algo, feat.sel, norm, seed) {
 
   sub.data = gsub(x = list.files(path = "data/metabase/"), pattern = ".arff", replacement = "")
   assertChoice(x = datafile, choices = sub.data, .var.name = "datafile")
-  assertChoice(x = algo, choices = AVAILABLE.REGR, .var.name = "algo")
   assertLogical(x = norm)
   assertLogical(x = feat.sel)
   assertInt(x = seed, lower = 1, upper = 30, .var.name = "seed")
 
+  if(grepl(pattern = "regr", x = algo)) {
+    assertChoice(x = algo, choices = AVAILABLE.REGR, .var.name = "algo")
+    task.type = "regression"
+  } else if (grepl(pattern = "classif", x = algo)) {
+    assertChoice(x = algo, choices = AVAILABLE.CLASS, .var.name = "algo")
+    task.type = "classification"
+  } else {
+    stop("Invalid algo option\n")
+  }
+  
   cat(" ---------------------------- \n")
   cat(" **** Meta-learning **** \n")
   cat(" ---------------------------- \n")
@@ -24,7 +33,7 @@ mainMTL = function(datafile, algo, feat.sel, norm, seed) {
   cat(" ---------------------------- \n")
 
   runMetaLearning(datafile = datafile, algo = algo, feat.sel = feat.sel, 
-    norm = norm, seed = seed)
+    norm = norm, seed = seed, task.type = task.type)
 
   cat("\n - Finished!\n")
   cat(" ---------------------------- \n")

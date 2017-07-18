@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-runMetaLearning = function(datafile, algo, feat.sel, norm, seed) {
+runMetaLearning = function(datafile, algo, feat.sel, norm, seed, task.type) {
 
   # Seed for reproducibility
   set.seed(seed)
@@ -24,17 +24,23 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, seed) {
     return (NULL)
   }
 
-  tasks     = getRegrSubTasks(datafile = datafile, norm = norm)
-  measures  = list(rmse, timetrain, timepredict)
-
-  lrns      = getRegrLearner(algo = algo, feat.sel = feat.sel)
+  if(task.type == "regression") {
+    tasks     = getRegrSubTasks(datafile = datafile, norm = norm)
+    measures  = list(rmse, timetrain, timepredict)
+    lrns      = getRegrLearner(algo = algo, feat.sel = feat.sel)
+  } else {
+    tasks     = getClassifTask(datafile = datafile, norm = norm)
+    measures  = list(ber, multiclass.au1p, multiclass.au1u, multiclass.aunp, 
+      multiclass.aunu, timetrain, timepredict)
+    lrns      = getClassifLearner(algo = algo, feat = feat.sel) 
+  }
 
   loo.cv    = makeResampleDesc(method = "LOO")
 
-  parallelMap::parallelStartMulticore(parallel::detectCores()-1)
+  # parallelMap::parallelStartMulticore(parallel::detectCores()-1)
   res = benchmark(learners = lrns, tasks = tasks, resamplings = loo.cv,
     measures = measures, show.info = TRUE, keep.pred = TRUE, models = TRUE)
-  parallelMap::parallelStop()
+  # parallelMap::parallelStop()
 
   print(res)
   save(res, file = job.file)
