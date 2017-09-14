@@ -8,7 +8,9 @@ AVAILABLE.REGR = c("regr.svm", "regr.rpart", "regr.randomForest", "regr.kknn", "
   "regr.gausspr")
 
 AVAILABLE.CLASS = c("classif.svm", "classif.rpart", "classif.randomForest", "classif.kknn", 
-  "classif.lm", "classif.gausspr")
+  "classif.lm", "classif.gausspr", "classif.JRip")
+
+AVAILABLE.RESAM = c("LOO", "10-CV")
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
