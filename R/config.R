@@ -12,5 +12,7 @@ AVAILABLE.CLASS = c("classif.svm", "classif.rpart", "classif.randomForest", "cla
 
 AVAILABLE.RESAM = c("LOO", "10-CV")
 
+AVAILABLE.FEATSEL = c("none", "sfs", "sbs", "sffs", "sfbs")
+
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------

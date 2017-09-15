@@ -3,17 +3,58 @@
 
   devtools::load_all()
 
+  #------------------------------
+  #------------------------------
+  
   # datafile = "classif_rule_all"
   datafile = "classif_svm_169d_90_all"
 
-  # algo = "classif.rpart"
-  algo = "classif.JRip"
+  algo = "classif.rpart"
+  # algo = "classif.JRip"
   
   seed = 1
-  feat.sel = TRUE #FALSE
+  feat.sel = "none"
+  # feat.sel = "sfs"
+  # feat.sel = "sbs"
+  # feat.sel = "sffs"
+  # feat.sel = "sbbs"
+  
   norm = FALSE
-  resamp = "CV"
+  resamp = "10-CV"
 
+  #------------------------------
+  #------------------------------
+  
+  sub.data = gsub(x = list.files(path = "data/metabase/"), pattern = ".arff", replacement = "")
+  assertChoice(x = datafile, choices = sub.data, .var.name = "datafile")
+  assertChoice(x = resamp, choices = AVAILABLE.RESAM)
+  assertChoice(x = feat.sel, choices = AVAILABLE.FEATSEL)
+  assertLogical(x = norm)
+  assertInt(x = seed, lower = 1, upper = 30, .var.name = "seed")
+
+  cat(" ---------------------------- \n")
+  cat(" **** Meta-learning **** \n")
+  cat(" ---------------------------- \n")
+
+  cat(paste0(" - Datafile: \t", datafile, "\n"))
+  cat(paste0(" - Algo: \t", algo, "\n"))
+  cat(paste0(" - Feat.Sel: \t", feat.sel, "\n"))
+  cat(paste0(" - Norm: \t", norm, "\n"))
+  cat(paste0(" - Resamp: \t", resamp, "\n"))
+  cat(paste0(" - Seed: \t", seed, "\n"))
+  cat(" ---------------------------- \n")
+
+  output.dir = paste("output", datafile, algo, sep="/")
+  output.dir = paste(output.dir, ifelse(norm, "with_norm", "no_norm"), sep="/")
+  output.dir = paste(output.dir, feat.sel, resamp, seed, sep="/")
+  
+  job.file = paste0(output.dir, "/ret_", datafile, ".RData")
+  
+  cat(paste0(" - Job file: \t", job.file, "\n"))
+
+  #------------------------------
+  #------------------------------
+  
   if(grepl(pattern = "regr", x = algo)) {
     assertChoice(x = algo, choices = AVAILABLE.REGR, .var.name = "algo")
     task.type = "regression"
@@ -36,9 +77,9 @@
 
   if(resamp == "LOO") {
     rdesc = makeResampleDesc(method = "LOO")
-    measures = append(list(auc), measures)
   } else {
     rdesc = makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
+    measures = append(list(auc), measures)
   }
 
   res = benchmark(learners = lrns, tasks = tasks, resamplings = rdesc,

@@ -7,10 +7,8 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, seed, task.ty
   options(mlr.debug.seed = seed)
 
   output.dir = paste("output", datafile, algo, sep="/")
-  output.dir = paste(output.dir, ifelse(feat.sel, "with_feat", "no_feat"), sep="/")
   output.dir = paste(output.dir, ifelse(norm, "with_norm", "no_norm"), sep="/")
-  output.dir = paste(output.dir, resamp, sep="/")
-  output.dir = paste(output.dir, seed, sep="/")
+  output.dir = paste(output.dir, feat.sel, resamp, seed, sep="/")
   
   if(!dir.exists(output.dir)) {
     dir.create(path = output.dir, recursive = TRUE)

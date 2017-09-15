@@ -4,15 +4,13 @@
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-getRegrLearner = function(algo, feat.sel = FALSE) {
+getRegrLearner = function(algo, feat.sel = feat.sel) {
 
   lrn = makeLearner(algo)
 
-  if(feat.sel) {
-    feat.ctrl = makeFeatSelControlSequential(method = "sfs")
-    # inner = makeResampleDesc("Holdout")
+  if(feat.sel != "none") {
+    feat.ctrl = makeFeatSelControlSequential(method = feat.sel, alpha = 0.01, beta = -0.01)
     inner = makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
-
     lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
       measures = list(rmse), show.info = FALSE)
   }
@@ -22,17 +20,15 @@ getRegrLearner = function(algo, feat.sel = FALSE) {
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-getClassifLearner = function(algo, feat.sel = FALSE) {
+getClassifLearner = function(algo, feat.sel = "none") {
 
   lrn = makeLearner(algo, predict.type = "prob")
 
-  if(feat.sel) {
-    feat.ctrl = makeFeatSelControlSequential(method = "sfs")
+  if(feat.sel != "none") {
+    feat.ctrl = makeFeatSelControlSequential(method = feat.sel, alpha = 0.01, beta = -0.01)
     inner = makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
-    # inner = makeResampleDesc("Holdout")
-    
     lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
-      measures = list(acc), show.info = FALSE)
+      measures = list(ber), show.info = TRUE)
   }
   return(lrn)
 }

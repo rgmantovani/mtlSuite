@@ -8,8 +8,8 @@ mainMTL = function(datafile, algo, feat.sel, norm, resamp, seed) {
   sub.data = gsub(x = list.files(path = "data/metabase/"), pattern = ".arff", replacement = "")
   assertChoice(x = datafile, choices = sub.data, .var.name = "datafile")
   assertChoice(x = resamp, choices = AVAILABLE.RESAM)
+  assertChoice(x = feat.sel, choices = AVAILABLE.FEATSEL)
   assertLogical(x = norm)
-  assertLogical(x = feat.sel)
   assertInt(x = seed, lower = 1, upper = 30, .var.name = "seed")
 
   if(grepl(pattern = "regr", x = algo)) {
