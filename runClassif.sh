@@ -8,16 +8,20 @@ do
     do
       for feat in "none" "sfs" # "sbs" "sffs" "sfbs"
       do
-        for rep in $(seq 1 10);
+        for resamp in "10-CV"
         do
-          R CMD BATCH --no-save --no-restore '--args' --datafile="$data" --algo="$algo" --norm="$norm" --feat.sel="$feat" -seed="$rep" \
-            mainMTL.R out_"$data"_"$algo"_"$norm"_"$feat"_"$rep".log &
-          PIDS[$rep]=$!
+          for rep in $(seq 1 10);
+          do
+            R CMD BATCH --no-save --no-restore '--args' --datafile="$data" --algo="$algo" --norm="$norm" \
+            --feat.sel="$feat" --resamp="$resamp" -seed="$rep" mainMTL.R \
+            out_"$data"_"$algo"_"$norm"_"$feat"_"$resamp"_"$rep".log &
+            PIDS[$rep]=$!
+          done
+          for k in $(seq 1 10);
+          do
+            wait ${PIDS[$k]}
+          done;
         done
-        for k in $(seq 1 10);
-        do
-          wait ${PIDS[$k]}
-        done;
       done
     done
   done
