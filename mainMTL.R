@@ -58,8 +58,8 @@ argsL = as.list(as.character(argsDF$V2))
 mainMTL(
   datafile = argsL[[1]], 
   algo     = argsL[[2]],
-  feat.sel = as.logical(argsL[[3]]),
-  norm     = as.logical(argsL[[4]]),
+  norm     = as.logical(argsL[[3]]),
+  feat.sel = argsL[[4]],
   resamp   = argsL[[5]],
   seed     = as.integer(argsL[[6]])
 )
