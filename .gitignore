@@ -8,7 +8,6 @@ data/mfeats/
 analysis/*
 
 createAutoDTMetaBases.R
-testing.R
 
 *.RData
 *.csv
