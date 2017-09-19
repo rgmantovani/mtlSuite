@@ -34,7 +34,8 @@
 @attribute inftheo.equivalent_attributes numeric
 @attribute inftheo.noise_signal_ratio numeric
 @attribute modelbased.nodes numeric
-@attribute modelbased.leaves.nodes_per_attribute numeric
+@attribute modelbased.leaves numeric
+@attribute modelbased.nodes_per_attribute numeric
 @attribute modelbased.nodes_per_instance numeric
 @attribute modelbased.leaf_corrobation numeric
 @attribute modelbased.level_min numeric
@@ -49,7 +50,6 @@
 @attribute modelbased.attribute_max numeric
 @attribute modelbased.attribute_mean numeric
 @attribute modelbased.attribute_sd numeric
-@attribute modelbased.NA numeric
 @attribute landmarking.naive_bayes numeric
 @attribute landmarking.stump_min numeric
 @attribute landmarking.stump_max numeric
