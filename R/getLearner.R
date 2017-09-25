@@ -10,7 +10,7 @@ getRegrLearner = function(algo, feat.sel = feat.sel) {
 
   if(feat.sel != "none") {
     feat.ctrl = makeFeatSelControlSequential(method = feat.sel, alpha = 0.01, beta = -0.01)
-    inner = makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
+    inner = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEAT, stratify = TRUE)
     lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
       measures = list(rmse), show.info = FALSE)
   }
@@ -26,7 +26,7 @@ getClassifLearner = function(algo, feat.sel = "none") {
 
   if(feat.sel != "none") {
     feat.ctrl = makeFeatSelControlSequential(method = feat.sel, alpha = 0.01, beta = -0.01)
-    inner = makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
+    inner = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEAT, stratify = TRUE)
     lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
       measures = list(auc), show.info = TRUE)
   }
