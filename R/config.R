@@ -8,7 +8,7 @@ AVAILABLE.REGR = c("regr.svm", "regr.rpart", "regr.randomForest", "regr.kknn", "
   "regr.gausspr")
 
 AVAILABLE.CLASS = c("classif.svm", "classif.rpart", "classif.randomForest", "classif.kknn", 
-  "classif.logreg", "classif.gausspr", "classif.JRip")
+  "classif.logreg", "classif.gausspr", "classif.JRip", "classif.naiveBayes")
 
 AVAILABLE.RESAM = c("LOO", "10-CV")
 

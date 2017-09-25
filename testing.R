@@ -7,14 +7,15 @@
   #------------------------------
   
   # datafile = "classif_rule_all"
-  datafile = "classif_svm_169d_90_all"
+  datafile = "classif_svm_169d_90_average"
 
-  algo = "classif.rpart"
+  # algo = "classif.rpart"
+  algo = "classif.naiveBayes"
   # algo = "classif.JRip"
   
   seed = 1
-  feat.sel = "none"
-  # feat.sel = "sfs"
+  # feat.sel = "none"
+  feat.sel = "sfs"
   # feat.sel = "sbs"
   # feat.sel = "sffs"
   # feat.sel = "sbbs"
