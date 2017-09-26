@@ -1,14 +1,14 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, seed, task.type) {
+runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning, seed, task.type) {
 
   set.seed(seed)
   options(mlr.debug.seed = seed)
 
   output.dir = paste("output", datafile, algo, sep="/")
   output.dir = paste(output.dir, ifelse(norm, "with_norm", "no_norm"), sep="/")
-  output.dir = paste(output.dir, feat.sel, resamp, seed, sep="/")
+  output.dir = paste(output.dir, feat.sel, resamp, tuning, seed, sep="/")
   
   if(!dir.exists(output.dir)) {
     dir.create(path = output.dir, recursive = TRUE)
@@ -29,7 +29,7 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, seed, task.ty
   } else {
     tasks    = getClassifTask(datafile = datafile, norm = norm)
     measures = list(acc, ber, timetrain, timepredict)
-    lrns     = getClassifLearner(algo = algo, feat = feat.sel) 
+    lrns     = getClassifLearner(task = tasks, algo = algo, feat = feat.sel, tuning = tuning) 
   }
 
   if(resamp == "LOO") {

@@ -1,17 +1,22 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-mainMTL = function(datafile, algo, feat.sel, norm, resamp, seed) {
+mainMTL = function(datafile, algo, feat.sel, norm, resamp, tuning, seed) {
 
   devtools::load_all()
 
+  #------------------------------
+  #  check parameters passed to mainMTL
+  #------------------------------
+  
   sub.data = gsub(x = list.files(path = "data/metabase/"), pattern = ".arff", replacement = "")
   assertChoice(x = datafile, choices = sub.data, .var.name = "datafile")
-  assertChoice(x = resamp, choices = AVAILABLE.RESAM)
+  assertChoice(x = resamp, choices = AVAILABLE.RESAMPLING)
   assertChoice(x = feat.sel, choices = AVAILABLE.FEATSEL)
-  assertLogical(x = norm)
+  assertChoice(x = tuning, choices = AVAILABLE.TUNING)
   assertInt(x = seed, lower = 1, upper = 30, .var.name = "seed")
-
+  assertLogical(x = norm)
+  
   if(grepl(pattern = "regr", x = algo)) {
     assertChoice(x = algo, choices = AVAILABLE.REGR, .var.name = "algo")
     task.type = "regression"
@@ -21,7 +26,7 @@ mainMTL = function(datafile, algo, feat.sel, norm, resamp, seed) {
   } else {
     stop("Invalid algo option\n")
   }
-  
+
   cat(" ---------------------------- \n")
   cat(" **** Meta-learning **** \n")
   cat(" ---------------------------- \n")
@@ -31,11 +36,12 @@ mainMTL = function(datafile, algo, feat.sel, norm, resamp, seed) {
   cat(paste0(" - Feat.Sel: \t", feat.sel, "\n"))
   cat(paste0(" - Norm: \t", norm, "\n"))
   cat(paste0(" - Resamp: \t", resamp, "\n"))
+  cat(paste0(" - Tuning: \t", tuning, "\n"))
   cat(paste0(" - Seed: \t", seed, "\n"))
   cat(" ---------------------------- \n")
 
   runMetaLearning(datafile = datafile, algo = algo, feat.sel = feat.sel, 
-    norm = norm, resamp = resamp, seed = seed, task.type = task.type)
+    norm = norm, resamp = resamp, tuning = tuning, seed = seed, task.type = task.type)
 
   cat("\n - Finished!\n")
   cat(" ---------------------------- \n")
@@ -61,7 +67,8 @@ mainMTL(
   norm     = as.logical(argsL[[3]]),
   feat.sel = argsL[[4]],
   resamp   = argsL[[5]],
-  seed     = as.integer(argsL[[6]])
+  tuning   = argsL[[6]],
+  seed     = as.integer(argsL[[7]])
 )
 
 #--------------------------------------------------------------------------------------------------

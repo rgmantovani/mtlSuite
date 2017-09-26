@@ -10,25 +10,31 @@
   datafile = "classif_svm_169d_90_average"
 
   # algo = "classif.rpart"
-  algo = "classif.naiveBayes"
-  # algo = "classif.JRip"
+  # algo = "classif.naiveBayes"
+  # algo = "classif.randomForest"
+  # algo = "classif.kknn"
+  # algo = "classif.gausspr"
+  # algo = "classif.logreg"
+  algo = "classif.svm"
   
   seed = 1
-  # feat.sel = "none"
-  feat.sel = "sfs"
+  feat.sel = "none"
+  # feat.sel = "sfs"
   # feat.sel = "sbs"
   # feat.sel = "sffs"
   # feat.sel = "sbbs"
   
   norm = FALSE
   resamp = "10-CV"
+  # tuning = FALSE  
+  tuning = "random"
 
   #------------------------------
   #------------------------------
   
   sub.data = gsub(x = list.files(path = "data/metabase/"), pattern = ".arff", replacement = "")
   assertChoice(x = datafile, choices = sub.data, .var.name = "datafile")
-  assertChoice(x = resamp, choices = AVAILABLE.RESAM)
+  assertChoice(x = resamp, choices = AVAILABLE.RESAMPLING)
   assertChoice(x = feat.sel, choices = AVAILABLE.FEATSEL)
   assertLogical(x = norm)
   assertInt(x = seed, lower = 1, upper = 30, .var.name = "seed")
@@ -42,6 +48,7 @@
   cat(paste0(" - Feat.Sel: \t", feat.sel, "\n"))
   cat(paste0(" - Norm: \t", norm, "\n"))
   cat(paste0(" - Resamp: \t", resamp, "\n"))
+  cat(paste0(" - Tuning: \t", tuning, "\n"))
   cat(paste0(" - Seed: \t", seed, "\n"))
   cat(" ---------------------------- \n")
 
@@ -73,7 +80,7 @@
   } else {
     tasks    = getClassifTask(datafile = datafile, norm = norm)
     measures = list(acc, ber, timetrain, timepredict)
-    lrns     = getClassifLearner(algo = algo, feat = feat.sel) 
+    lrns     = getClassifLearner(task = tasks, algo = algo, feat = feat.sel, tuning = tuning) 
   }
 
   if(resamp == "LOO") {
