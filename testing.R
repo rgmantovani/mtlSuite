@@ -54,7 +54,7 @@
 
   output.dir = paste("output", datafile, algo, sep="/")
   output.dir = paste(output.dir, ifelse(norm, "with_norm", "no_norm"), sep="/")
-  output.dir = paste(output.dir, feat.sel, resamp, seed, sep="/")
+  output.dir = paste(output.dir, feat.sel, resamp, tuning, seed, sep="/")
   
   job.file = paste0(output.dir, "/ret_", datafile, ".RData")
   
