@@ -8,7 +8,7 @@
   
   # datafile = "classif_rule_all"
   # datafile = "classif_svm_169d_90_average"
-  datafile = "classif_svm_99_pca10"
+  datafile = "classif_svm_99_pca40"
 
   algo = "classif.rpart"
   # algo = "classif.naiveBayes"
