@@ -7,15 +7,16 @@
   #------------------------------
   
   # datafile = "classif_rule_all"
-  datafile = "classif_svm_169d_90_average"
+  # datafile = "classif_svm_169d_90_average"
+  datafile = "classif_svm_99_pca10"
 
-  # algo = "classif.rpart"
+  algo = "classif.rpart"
   # algo = "classif.naiveBayes"
   # algo = "classif.randomForest"
   # algo = "classif.kknn"
   # algo = "classif.gausspr"
   # algo = "classif.logreg"
-  algo = "classif.svm"
+  #algo = "classif.svm"
   
   seed = 1
   feat.sel = "none"
@@ -26,8 +27,9 @@
   
   norm = FALSE
   resamp = "10-CV"
-  # tuning = FALSE  
-  tuning = "random"
+  
+  tuning = "none"  
+# tuning = "random"
 
   #------------------------------
   #------------------------------
