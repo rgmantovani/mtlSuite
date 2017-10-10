@@ -1,8 +1,7 @@
-
-for data in "classif_svm_90_pca10" "classif_svm_90_pca20" "classif_svm_90_pca40" "classif_svm_90_pca80" "classif_svm_95_pca10" "classif_svm_95_pca20" "classif_svm_95_pca40" "classif_svm_95_pca80" "classif_svm_99_pca10" "classif_svm_99_pca20" "classif_svm_99_pca40" "classif_svm_99_pca80" 
+for data in "classif_svm_90_pca10" "classif_svm_90_pca20" "classif_svm_90_pca40" "classif_svm_90_pca80" "classif_svm_95_pca10" "classif_svm_95_pca20" "classif_svm_95_pca40" "classif_svm_95_pca80" "classif_svm_99_pca10" "classif_svm_99_pca20" "classif_svm_99_pca40" "classif_svm_99_pca80"
 do
-  for algo in "classif.naiveBayes" "classif.svm" "classif.rpart" "classif.kknn" "classif.logreg" "classif.gausspr" "classif.randomForest" 
-  #for algo in "classif.svm" "classif.rpart" "classif.kknn" "classif.gausspr" "classif.randomForest" 
+  #for algo in "classif.naiveBayes" "classif.svm" "classif.rpart" "classif.kknn" "classif.logreg" "classif.gausspr" "classif.randomForest" 
+  for algo in "classif.svm" "classif.rpart" "classif.kknn" "classif.gausspr" "classif.randomForest"
   do
     #for norm in "TRUE" "FALSE"
     for norm in "FALSE"
@@ -11,7 +10,7 @@ do
       do
         for resamp in "10-CV"
         do
-          for tun in "none" # "random"
+          for tun in "random" # none
           do
             for rep in $(seq 1 20);
             do
