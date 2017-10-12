@@ -54,7 +54,6 @@ getRpartSpace = function(...) {
 getRandomForestSpace = function(...) {
   args = list(...)
   par.set = makeParamSet(
-    #makeIntegerParam(id = "mtry", lower = round(args$p ^ 0.1), upper = round(args$p ^ 0.9)),
     makeIntegerParam(id = "ntree", lower = 0, upper = 10, trafo = function(x) 2^x),
     makeIntegerParam(id = "nodesize", lower = 1, upper = 20)
   )

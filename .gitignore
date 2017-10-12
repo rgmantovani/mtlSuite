@@ -2,15 +2,15 @@
 .Rhistory
 .RData
 
-data/results/
-data/mfeats/
-
-analysis/*
+data/classif_rule_all.arff
 
 createAutoDTMetaBases.R
+
+tests/
 
 *.RData
 *.csv
 *.txt
 *.zip
 *.log
+*.sh
