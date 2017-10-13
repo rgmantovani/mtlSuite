@@ -9,6 +9,7 @@ data/regr_all.arff
 createAutoDTMetaBases.R
 
 tests/
+testing.R
 
 *.RData
 *.csv
