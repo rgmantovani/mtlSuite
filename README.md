@@ -50,7 +50,9 @@ Rscript mainMTL.R --datafile=<datafile> --algo=<algo> --norm=<norm> --feat.sel=<
 #Rscript mainMTL.R --datafile="toy_iris" --algo="classif.rpart" --norm="FALSE" --feat.sel="none" --resamp="10-CV" \
 #  --tuning="none" --seed="1" &
 ```
-This example it will run the rpart classification algorithm on the data ``toy_iris``, not scaling data, not performing feature selection, not doing tuning, doing a 10-fold CV and definying the seed as 1. The output job will be saved at the ```output``` sub-directory.
+This example it will run the rpart classification algorithm on the data ``toy_iris``, not scaling data, not performing feature selection, not doing tuning, doing a 10-fold CV with the seed equals to 1. 
+
+The resultant job will be saved at the ```output``` sub-directory.
 
 <!--### Contact-->
 
