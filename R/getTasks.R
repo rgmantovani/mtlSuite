@@ -1,57 +1,64 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getRegrSubTasks = function(datafile, norm = FALSE) {
+.multiTasks = function(data, id, n, type) {
 
-  cat(paste0(" @ Loading dataset: ", datafile, "\n"))
-  data = foreign::read.arff(paste0("data/metabase/", datafile, ".arff"))
+  checkmate::assertChoice(x = type, choices = c("regr", "classif"))
 
-  # data norm (mean zero, variance one)
-  if(norm) {
-    for(i in colnames(data)[2:(ncol(data)-4)]) {
-      data[,i] = RSNNS::normalizeData(data[,i], type="norm")
+  aux = lapply(1:n, function(i) {
+
+    sub.data = data[,c(2:(ncol(data)-n), (ncol(data)-(n-i)))]
+    colnames(sub.data)[ncol(sub.data)] = "Class"
+
+    task.id = paste0(id,"_", colnames(data)[ncol(data)-(n-i)])
+
+    if(type == "regr") {
+      task = makeRegrTask(id = task.id, data = sub.data, target = "Class")
+    } else {
+      task = makeClassifTask(id = task.id, data = sub.data, target = "Class")
     }
-  }
+  })
 
-  sub.data.1 = data[,c(2:(ncol(data)-4), (ncol(data)-3))]
-  colnames(sub.data.1)[ncol(sub.data.1)] = "Target"
-
-  sub.data.2 = data[,c(2:(ncol(data)-4), (ncol(data)-2))]
-  colnames(sub.data.2)[ncol(sub.data.2)] = "Target"
-  
-  sub.data.3 = data[,c(2:(ncol(data)-4), (ncol(data)-1))]
-  colnames(sub.data.3)[ncol(sub.data.3)] = "Target"
-  
-  sub.data.4 = data[,c(2:(ncol(data)-4), (ncol(data)))]
-  colnames(sub.data.4)[ncol(sub.data.4)] = "Target"
-  
-  cat(paste0(" @ Creating subtasks \n"))
-  task1 = makeRegrTask(id = paste0(datafile,"_cart_df"),   data = sub.data.1, target = "Target")
-  task2 = makeRegrTask(id = paste0(datafile,"_cart_irace"),data = sub.data.2, target = "Target")
-  task3 = makeRegrTask(id = paste0(datafile,"_J48_df"),    data = sub.data.3, target = "Target")
-  task4 = makeRegrTask(id = paste0(datafile,"_J48_irace"), data = sub.data.4, target = "Target")
-
-  regr.tasks = list(task1, task2, task3, task4)
-  return(regr.tasks)
+  tasks = aux
+  return(tasks)
 }
 
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-getClassifTask = function(datafile, norm = FALSE) {
+getRegrTask = function(data, id) {
 
-  cat(paste0(" @ Loading dataset: ", datafile, "\n"))
-  data = foreign::read.arff(paste0("data/metabase/", datafile, ".arff"))
+  n = length(which(grepl(colnames(data), pattern = "Class")))
 
-  # data norm (mean zero, variance one)
-  if(norm) {
-    for(i in colnames(data)[2:(ncol(data)-1)]) {
-      data[,i] = RSNNS::normalizeData(data[,i], type="norm")
-    }
+  if(n == 1) {
+    cat(" @ Unique Class attribute found - Single regression task\n")
+    task = makeRegrTask(id = id, data = data[,-1], target = "Class")
+    tasks = list(task)
+  } else {
+    cat(" @ Several \"Class\" attributes found - Multi-target regression tasks\n")
+    tasks = .multiTasks(data = data, id = id, n = n, type = "regr")
   }
 
-  task = makeClassifTask(id = datafile, data = data[,-1], target = "Class")
-  return(task)
+  return(tasks)
+}
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
+getClassifTask = function(data, id) {
+
+  n = length(which(grepl(colnames(data), pattern = "Class")))
+
+  if(n == 1) {
+    cat(" @ Unique Class attribute found - Single classification task\n")
+    task = makeClassifTask(id = id, data = data[,-1], target = "Class")
+    tasks = list(task)
+  } else {
+    cat(" @ Several \"Class\" attributes found - Multi-target classification tasks\n")
+    tasks = .multiTasks(data = data, id = id, n = n, type = "classif")
+  }
+
+  return(tasks)
 }
 
 # -------------------------------------------------------------------------------------------------

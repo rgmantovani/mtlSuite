@@ -9,7 +9,7 @@ mainMTL = function(datafile, algo, feat.sel, norm, resamp, tuning, seed) {
   #  check parameters passed to mainMTL
   #------------------------------
   
-  sub.data = gsub(x = list.files(path = "data/metabase/"), pattern = ".arff", replacement = "")
+  sub.data = gsub(x = list.files(path = "data/"), pattern = ".arff", replacement = "")
   assertChoice(x = datafile, choices = sub.data, .var.name = "datafile")
   assertChoice(x = resamp, choices = AVAILABLE.RESAMPLING)
   assertChoice(x = feat.sel, choices = AVAILABLE.FEATSEL)

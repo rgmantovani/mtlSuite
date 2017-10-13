@@ -6,6 +6,9 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning, seed,
   set.seed(seed)
   options(mlr.debug.seed = seed)
 
+  #--------------------------
+  #--------------------------
+
   output.dir = paste("output", datafile, algo, sep="/")
   output.dir = paste(output.dir, ifelse(norm, "with_norm", "no_norm"), sep="/")
   output.dir = paste(output.dir, feat.sel, resamp, tuning, seed, sep="/")
@@ -22,30 +25,54 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning, seed,
     return (NULL)
   }
 
-  if(task.type == "regression") {
-    tasks    = getRegrSubTasks(datafile = datafile, norm = norm)
-    measures = list(rmse, timetrain, timepredict)
-    lrns     = getRegrLearner(algo = algo, feat.sel = feat.sel)
-  } else {
-    tasks    = getClassifTask(datafile = datafile, norm = norm)
-    measures = list(acc, ber, timetrain, timepredict)
-    lrns     = getClassifLearner(task = tasks, algo = algo, feat = feat.sel, tuning = tuning) 
-  }
+  #--------------------------
+  #--------------------------
 
-  if(resamp == "LOO") {
-    rdesc = makeResampleDesc(method = "LOO")
+  data = readData(datafile = datafile, norm = norm)
+
+  #--------------------------
+  #--------------------------
+
+  if(task.type == "regression") {
+    
+    tasks    = getRegrTask(data = data, id = datafile)
+    measures = list(rmse, timetrain, timepredict)
+    lrns     = getRegrLearner(task = tasks[[1]], algo = algo, feat = feat.sel, tuning = tuning)
+
+    if(resamp == "LOO") {
+      rdesc = makeResampleDesc(method = "LOO")
+    } else {
+      rdesc = makeResampleDesc(method = "CV", iters = 10, stratify = FALSE)
+    }
+
   } else {
-    measures = append(list(auc), measures)
-    rdesc = makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
+  
+    tasks    = getClassifTask(data = data, id = datafile)
+    measures = list(acc, ber, timetrain, timepredict)
+    lrns     = getClassifLearner(task = tasks[[1]], algo = algo, feat = feat.sel, tuning = tuning) 
+
+    if(length(getTaskClassLevels(tasks[[1]])) == 2) {
+      measures = append(list(auc, f1), measures)
+    } 
+
+    if(resamp == "LOO") {
+      rdesc = makeResampleDesc(method = "LOO")
+    } else {
+      rdesc = makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
+    }
   }
   
-  parallelMap::parallelStartMulticore(parallel::detectCores()-1, level = "mlr.resample")
+  #--------------------------
+  #--------------------------
+
+  # Running and saving job
+  
   res = benchmark(learners = lrns, tasks = tasks, resamplings = rdesc,
     measures = measures, show.info = TRUE, keep.pred = TRUE, models = TRUE)
-  parallelMap::parallelStop()
-
+  
   print(res)
   save(res, file = job.file)
+
 }
 
 # -------------------------------------------------------------------------------------------------

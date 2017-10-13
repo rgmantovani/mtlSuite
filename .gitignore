@@ -3,6 +3,8 @@
 .RData
 
 data/classif_rule_all.arff
+data/classif_svm_169d_95_average.arff
+data/regr_all.arff
 
 createAutoDTMetaBases.R
 
