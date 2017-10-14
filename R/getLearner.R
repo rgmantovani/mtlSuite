@@ -4,6 +4,7 @@
 #  Hyperprameter tuning: rs  - Random Search 
 
 # TODO: make feature selection and tuning work together trough mlr package
+#  Current mlr package version does not allow it
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -15,11 +16,6 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
   }
 
   lrn = makeLearner(algo)
-
-  #  FIXME: do we control ou nor data scaling ?
-  # if(algo %in% c("regr.svm", "regr.kknn")) {
-  #   lrn = setHyperPars(learner = lrn, par.vals = list(scale = norm)) 
-  # }
 
   if(feat.sel != "none") {
    
@@ -58,18 +54,9 @@ getClassifLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tunin
     measures = list(auc)
     cat(" @ Inner perforamnce measure: AUC\n")
   } else {
-    measures = list(ber)
-    cat(" @ Inner perforamnce measure: BER \n")
+    measures = list(multiclass.aunp)
+    cat(" @ Inner perforamnce measure: multiclass AUC \n")
   }
-
-  #  FIXME: do we control ou nor data scaling ?
-  # if(algo %in% c("classif.svm", "classif.kknn")) {
-    # lrn = setHyperPars(learner = lrn, par.vals = list(scale = norm)) 
-  # }
-
-  # if(algo == "classif.gausspr") {
-    # lrn = setHyperPars(learner = lrn, par.vals = list(scaled = norm)) 
-  # }
 
   if(feat.sel != "none") {
     

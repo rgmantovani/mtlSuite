@@ -53,7 +53,9 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning, seed,
 
     if(length(getTaskClassLevels(tasks[[1]])) == 2) {
       measures = append(list(auc, f1), measures)
-    } 
+    } else {
+      measures = append(list(multiclass.aunp, kappa), measures)
+    }
 
     if(resamp == "LOO") {
       rdesc = makeResampleDesc(method = "LOO")
