@@ -52,9 +52,9 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning, seed,
     lrns     = getClassifLearner(task = tasks[[1]], algo = algo, feat = feat.sel, tuning = tuning) 
 
     if(length(getTaskClassLevels(tasks[[1]])) == 2) {
-      measures = append(list(auc, f1), measures)
+      measures = append(list(auc, f1, mlr::kappa), measures)
     } else {
-      measures = append(list(multiclass.aunp, kappa), measures)
+      measures = append(list(multiclass.aunp, mlr::kappa), measures)
     }
 
     if(resamp == "LOO") {
