@@ -8,7 +8,7 @@ AVAILABLE.REGR = c("regr.svm", "regr.rpart", "regr.randomForest", "regr.kknn", "
   "regr.gausspr", "regr.xgboost")
 
 AVAILABLE.CLASS = c("classif.svm", "classif.rpart", "classif.randomForest", "classif.kknn", 
-  "classif.logreg", "classif.gausspr", "classif.naiveBayes", "classif.xgboost")
+  "classif.logreg", "classif.gausspr", "classif.naiveBayes", "classif.xgboost", "classif.C50")
 
 AVAILABLE.RESAMPLING = c("LOO", "10-CV")
 

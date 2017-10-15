@@ -27,7 +27,6 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
     }
 
     inner     = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = FALSE)
-   
     lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
       measures = list(rmse), show.info = TRUE)
   }
