@@ -19,7 +19,13 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
 
   if(feat.sel != "none") {
    
-    feat.ctrl = makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, beta = BETA)
+    if(feat.sel == "ga") {
+      feat.ctrl = makeFeatSelControlGA(mu = MU.SIZE, lambda = LAMBDA.SIZE, crossover.rate = 0.5, 
+        mutation.rate = 0.05, maxit = GA.MAXIT)
+    } else {
+      feat.ctrl  = makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, beta = BETA)
+    }
+
     inner     = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = FALSE)
    
     lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
@@ -60,9 +66,14 @@ getClassifLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tunin
 
   if(feat.sel != "none") {
     
-    feat.ctrl  = makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, beta = BETA)
+    if(feat.sel == "ga") {
+      feat.ctrl = makeFeatSelControlGA(mu = MU.SIZE, lambda = LAMBDA.SIZE, crossover.rate = 0.5, 
+        mutation.rate = 0.05, maxit = GA.MAXIT)
+    } else {
+      feat.ctrl  = makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, beta = BETA)
+    }
+
     feat.inner = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = TRUE)
-    
     lrn = makeFeatSelWrapper(learner = lrn, resampling = feat.inner, control = feat.ctrl,
       measures = measures, show.info = TRUE)
   }

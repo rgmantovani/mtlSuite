@@ -12,14 +12,24 @@ AVAILABLE.CLASS = c("classif.svm", "classif.rpart", "classif.randomForest", "cla
 
 AVAILABLE.RESAMPLING = c("LOO", "10-CV")
 
-AVAILABLE.FEATSEL = c("none", "sfs", "sbs", "sffs", "sfbs")
+# feature selection options
+AVAILABLE.FEATSEL = c("none", "sfs", "sbs", "sffs", "sfbs", "ga")
 INNER.FOLDS.FEATSEL = 3
+
+# Sequential feature selection methods
 ALPHA = 0.001
 BETA  = -0.01
 
+# GA feature selection method
+GA.MAXIT = 100
+MU.SIZE = 10L
+LAMBDA.SIZE = 10L
+
+# tuning options
 AVAILABLE.TUNING = c("random", "none")
 INNER.FOLDS.TUNING = 3
 BUDGET.TUNING = 300
+
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
