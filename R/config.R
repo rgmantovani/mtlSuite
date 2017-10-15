@@ -5,10 +5,10 @@ mlr::configureMlr(on.learner.error = "warn")
 mlr::configureMlr(show.info = TRUE)
 
 AVAILABLE.REGR = c("regr.svm", "regr.rpart", "regr.randomForest", "regr.kknn", "regr.lm", 
-  "regr.gausspr")
+  "regr.gausspr", "regr.xgboost")
 
 AVAILABLE.CLASS = c("classif.svm", "classif.rpart", "classif.randomForest", "classif.kknn", 
-  "classif.logreg", "classif.gausspr", "classif.naiveBayes")
+  "classif.logreg", "classif.gausspr", "classif.naiveBayes", "classif.xgboost")
 
 AVAILABLE.RESAMPLING = c("LOO", "10-CV")
 

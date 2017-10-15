@@ -23,7 +23,7 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
     inner     = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = FALSE)
    
     lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
-      measures = list(rmse), show.info = FALSE)
+      measures = list(rmse), show.info = TRUE)
   }
 
   if(tuning != "none") {
@@ -33,7 +33,7 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
     tn.inner   = makeResampleDesc(method = "CV", iters = INNER.FOLDS.TUNING, stratify = FALSE)
     
     lrn = makeTuneWrapper(learner = lrn, resampling = tn.inner, control = tn.ctrl, 
-      measures = list(rmse), par.set = tn.par.set, show.info = FALSE)
+      measures = list(rmse), par.set = tn.par.set, show.info = TRUE)
   }
 
   return(lrn)

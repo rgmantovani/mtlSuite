@@ -51,6 +51,19 @@ getRpartSpace = function(...) {
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
+getXgboostSpace = function(...) {
+  par.set = makeParamSet(
+    makeIntegerParam("nrounds", lower = 0, upper = 10, trafo = function(x) 2^x),
+    makeNumericParam("eta", lower = -7, upper = -5, trafo = function(x) 2^x),
+    makeIntegerParam("max_depth", lower = 1, upper = 30),
+    makeNumericParam("subsample", lower = 1, upper = 10, trafo = function(x) 0.1*x)
+  )
+  return(par.set)
+}
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
 getRandomForestSpace = function(...) {
   args = list(...)
   par.set = makeParamSet(
