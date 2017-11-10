@@ -3,8 +3,16 @@
 #  Feature selection :   sfs - Sequential Forward Selection
 #  Hyperprameter tuning: rs  - Random Search 
 
-# TODO: make feature selection and tuning work together trough mlr package
+# TODO: make feature selection search methods and tuning work together trough mlr package
 #  Current mlr package version does not allow it
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+
+isFilterFeatSel = function(feat.sel) {
+  bool = (feat.sel %in% c(RELIEF.CONFS, INFO.GAIN.CONFS))
+  return(bool)
+}
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
@@ -18,17 +26,34 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
   lrn = makeLearner(algo)
 
   if(feat.sel != "none") {
-   
-    if(feat.sel == "ga") {
-      feat.ctrl = makeFeatSelControlGA(mu = MU.SIZE, lambda = LAMBDA.SIZE, crossover.rate = 0.5, 
-        mutation.rate = 0.05, maxit = GA.MAXIT)
-    } else {
-      feat.ctrl  = makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, beta = BETA)
-    }
 
-    inner     = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = FALSE)
-    lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
-      measures = list(rmse), show.info = TRUE)
+    if(isFilterFeatSel(feat.sel = feat.sel)) {
+
+      perc = tail(strsplit(x = feat.sel, split = "\\.")[[1]], n = 1)
+      FILTER.PERC = as.numeric(paste("0", perc, sep="."))
+
+      if(grepl("relief", feat.sel)) {
+        FILTER = "relief"
+      } else {
+        FILTER = "information.gain"
+      }
+
+      lrn = makeFilterWrapper(learner = lrn, fw.method = FILTER, fw.perc = FILTER.PERC)
+
+    } else {
+
+   
+      if(feat.sel == "ga") {
+        feat.ctrl = makeFeatSelControlGA(mu = MU.SIZE, lambda = LAMBDA.SIZE, crossover.rate = 0.5, 
+          mutation.rate = 0.05, maxit = GA.MAXIT)
+      } else {
+        feat.ctrl  = makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, beta = BETA)
+      }
+
+      inner = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = FALSE)
+      lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
+        measures = list(rmse), show.info = TRUE)
+    }
   }
 
   if(tuning != "none") {
@@ -64,17 +89,36 @@ getClassifLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tunin
   }
 
   if(feat.sel != "none") {
-    
-    if(feat.sel == "ga") {
-      feat.ctrl = makeFeatSelControlGA(mu = MU.SIZE, lambda = LAMBDA.SIZE, crossover.rate = 0.5, 
-        mutation.rate = 0.05, maxit = GA.MAXIT)
-    } else {
-      feat.ctrl  = makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, beta = BETA)
-    }
 
-    feat.inner = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = TRUE)
-    lrn = makeFeatSelWrapper(learner = lrn, resampling = feat.inner, control = feat.ctrl,
-      measures = measures, show.info = TRUE)
+    if(isFilterFeatSel(feat.sel = feat.sel)) {
+
+      cat(" @ Feature Selection Filter method \n")
+
+      perc = tail(strsplit(x = feat.sel, split = "\\.")[[1]], n = 1)
+      FILTER.PERC = as.numeric(paste("0", perc, sep="."))
+
+      if(grepl("relief", feat.sel)) {
+        FILTER = "relief"
+      } else {
+        FILTER = "information.gain"
+      }
+
+      lrn = makeFilterWrapper(learner = lrn, fw.method = FILTER, fw.perc = FILTER.PERC)
+
+    } else {
+
+      cat(" @ Feature Selection Search method \n")
+      if(feat.sel == "ga") {
+        feat.ctrl = makeFeatSelControlGA(mu = MU.SIZE, lambda = LAMBDA.SIZE, crossover.rate = 0.5, 
+          mutation.rate = 0.05, maxit = GA.MAXIT)
+      } else {
+        feat.ctrl  = makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, beta = BETA)
+      }
+
+      feat.inner = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = TRUE)
+      lrn = makeFeatSelWrapper(learner = lrn, resampling = feat.inner, control = feat.ctrl,
+        measures = measures, show.info = TRUE)
+    }
   }
 
   if(tuning != "none") {

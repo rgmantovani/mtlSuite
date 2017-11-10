@@ -8,6 +8,7 @@ data/regr_all.arff
 data/regr_single.arff
 
 createAutoDTMetaBases.R
+featselExploration.R
 
 tests/
 testing.R

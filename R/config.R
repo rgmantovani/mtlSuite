@@ -13,7 +13,10 @@ AVAILABLE.CLASS = c("classif.svm", "classif.rpart", "classif.randomForest", "cla
 AVAILABLE.RESAMPLING = c("LOO", "10-CV")
 
 # feature selection options
-AVAILABLE.FEATSEL = c("none", "sfs", "sbs", "sffs", "sfbs", "ga")
+# "relief", "information.gain"
+RELIEF.CONFS = paste("relief", seq(from = 0.05, to = 0.9, by = 0.05), sep=".")
+INFO.GAIN.CONFS = paste("information.gain", seq(from = 0.05, to = 0.9, by = 0.05), sep=".")  
+AVAILABLE.FEATSEL = c("none", "sfs", "sbs", "sffs", "sfbs", "ga", RELIEF.CONFS, INFO.GAIN.CONFS)
 INNER.FOLDS.FEATSEL = 3
 
 # Sequential feature selection methods
@@ -22,7 +25,7 @@ BETA  = -0.01
 
 # GA feature selection method
 GA.MAXIT = 100
-MU.SIZE = 10L
+MU.SIZE  = 10L
 LAMBDA.SIZE = 10L
 
 # tuning options
