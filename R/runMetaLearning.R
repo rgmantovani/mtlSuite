@@ -1,17 +1,19 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning, seed, task.type) {
+runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning, 
+  balancing, seed, task.type) {
 
   set.seed(seed)
   options(mlr.debug.seed = seed)
 
   #--------------------------
+  # creating output dir
   #--------------------------
 
   output.dir = paste("output", datafile, algo, sep="/")
   output.dir = paste(output.dir, ifelse(norm, "with_norm", "no_norm"), sep="/")
-  output.dir = paste(output.dir, feat.sel, resamp, tuning, seed, sep="/")
+  output.dir = paste(output.dir, feat.sel, resamp, tuning, balancing, seed, sep="/")
   
   if(!dir.exists(output.dir)) {
     dir.create(path = output.dir, recursive = TRUE)
@@ -26,11 +28,13 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning, seed,
   }
 
   #--------------------------
+  # reading data
   #--------------------------
 
   data = readData(datafile = datafile, norm = norm)
 
   #--------------------------
+  # setting up experiment
   #--------------------------
 
   if(task.type == "regression") {
@@ -65,12 +69,13 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning, seed,
   }
   
   #--------------------------
-  #--------------------------
-
   # Running and saving job
+  #--------------------------
   
   res = benchmark(learners = lrns, tasks = tasks, resamplings = rdesc,
-    measures = measures, show.info = TRUE, keep.pred = TRUE, models = TRUE)
+    measures = measures, show.info = TRUE, keep.pred = TRUE, 
+    models = TRUE)
+    # models = FALSE) # uncomment to avoid export models
   
   print(res)
   save(res, file = job.file)

@@ -55,7 +55,8 @@ mainMTL = function(datafile, algo, feat.sel, norm, resamp, tuning, balancing, se
   cat(" ---------------------------- \n")
 
   runMetaLearning(datafile = datafile, algo = algo, feat.sel = feat.sel, 
-    norm = norm, resamp = resamp, tuning = tuning, seed = seed, task.type = task.type)
+    norm = norm, resamp = resamp, tuning = tuning, balancing = balancing,
+    seed = seed, task.type = task.type)
 
   cat("\n - Finished!\n")
   cat(" ---------------------------- \n")
