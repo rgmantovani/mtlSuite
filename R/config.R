@@ -14,8 +14,8 @@ AVAILABLE.RESAMPLING = c("LOO", "10-CV")
 
 # feature selection options
 # "relief", "information.gain"
-RELIEF.CONFS = paste("relief", seq(from = 0.05, to = 0.9, by = 0.05), sep=".")
-INFO.GAIN.CONFS = paste("information.gain", seq(from = 0.05, to = 0.9, by = 0.05), sep=".")  
+RELIEF.CONFS = paste("relief", seq(from = 0.05, to = 1, by = 0.05), sep=".")
+INFO.GAIN.CONFS = paste("information.gain", seq(from = 0.05, to = 1, by = 0.05), sep=".")  
 AVAILABLE.FEATSEL = c("none", "sfs", "sbs", "sffs", "sfbs", "ga", RELIEF.CONFS, INFO.GAIN.CONFS)
 INNER.FOLDS.FEATSEL = 3
 
