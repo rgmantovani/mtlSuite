@@ -19,7 +19,7 @@ isFilterFeatSel = function(feat.sel) {
 
 getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="none") {
 
-  if(feat.sel != "none" & tuning != "none") {
+  if(feat.sel != "none" & (!isFilterFeatSel(feat.sel = feat.sel)) & tuning != "none") {
     stop(" @ mlr package cannot handle tuning and feature selection wrapped to the same learner")
   }
 
@@ -72,10 +72,11 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
-getClassifLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="none") {
+getClassifLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="none",
+  balancing="none") {
 
-  if(feat.sel != "none" & tuning != "none") {
-    stop(" @ mlr package cannot handle tuning and feature selection wrapped to the same learner")
+  if(feat.sel != "none" & (!isFilterFeatSel(feat.sel = feat.sel)) & tuning != "none") {
+    stop(" @ mlr package cannot handle tuning and feature selection search methods to the same learner")
   }
 
   lrn = makeLearner(algo, predict.type = "prob")
@@ -86,6 +87,10 @@ getClassifLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tunin
   } else {
     measures = list(multiclass.aunp)
     cat(" @ Inner perforamnce measure: multiclass AUC \n")
+  }
+
+  if(balancing != "none"){
+    lrn = makeSMOTEWrapper(learner = lrn, sw.rate = SMOTE.RATE)
   }
 
   if(feat.sel != "none") {
