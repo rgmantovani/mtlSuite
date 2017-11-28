@@ -32,8 +32,10 @@ AVAILABLE.TUNING = c("random", "none")
 INNER.FOLDS.TUNING = 3
 BUDGET.TUNING = 300
 
-AVAILABLE.BALANCING = c("none", "smote")
+AVAILABLE.BALANCING = c("none", "smote", "oversamp", "undersamp")
 SMOTE.RATE = 2
+UNDER.RATE = 1/2
+OVER.RATE  = 2
 
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------

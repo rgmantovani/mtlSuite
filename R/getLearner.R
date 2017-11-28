@@ -17,6 +17,22 @@ isFilterFeatSel = function(feat.sel) {
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
+setBalancingMethod = function(learner, balancing) {
+
+  if(balancing == "smote") {
+    learner = makeSMOTEWrapper(learner = learner, sw.rate = SMOTE.RATE)
+  } else if(balancing == "oversamp") {
+    learner = makeOversampleWrapper(learner, osw.rate = OVER.RATE)
+  } else if(balancing == "undersamp") {
+    learner = makeUndersampleWrapper(learner, usw.rate = UNDER.RATE)
+  } 
+
+  return(learner)
+}
+
+#--------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------
+
 getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="none") {
 
   if(feat.sel != "none" & (!isFilterFeatSel(feat.sel = feat.sel)) & tuning != "none") {
@@ -89,9 +105,7 @@ getClassifLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tunin
     cat(" @ Inner perforamnce measure: multiclass AUC \n")
   }
 
-  if(balancing != "none"){
-    lrn = makeSMOTEWrapper(learner = lrn, sw.rate = SMOTE.RATE)
-  }
+  lrn = setBalancingMethod(learner = lrn, balancing = balancing)
 
   if(feat.sel != "none") {
 

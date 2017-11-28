@@ -53,10 +53,11 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning,
   
     tasks    = getClassifTask(data = data, id = datafile)
     measures = list(acc, ber, timetrain, timepredict)
-    lrns     = getClassifLearner(task = tasks[[1]], algo = algo, feat = feat.sel, tuning = tuning) 
+    lrns     = getClassifLearner(task = tasks[[1]], algo = algo, feat = feat.sel, 
+      tuning = tuning, balancing = balancing)
 
     if(length(getTaskClassLevels(tasks[[1]])) == 2) {
-      measures = append(list(auc, f1, mlr::kappa), measures)
+      measures = append(list(auc, gmean, f1, mlr::kappa), measures)
     } else {
       measures = append(list(multiclass.aunp, mlr::kappa), measures)
     }
