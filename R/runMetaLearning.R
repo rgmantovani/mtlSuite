@@ -57,7 +57,7 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning,
       tuning = tuning, balancing = balancing)
 
     if(length(getTaskClassLevels(tasks[[1]])) == 2) {
-      measures = append(list(auc, gmean, f1, mlr::kappa), measures)
+      measures = append(list(auc, gmean, f1, mlr::kappa, tpr, tnr), measures)
     } else {
       measures = append(list(multiclass.aunp, mlr::kappa), measures)
     }
@@ -75,8 +75,8 @@ runMetaLearning = function(datafile, algo, feat.sel, norm, resamp, tuning,
   
   res = benchmark(learners = lrns, tasks = tasks, resamplings = rdesc,
     measures = measures, show.info = TRUE, keep.pred = TRUE, 
-    models = TRUE)
-    # models = FALSE) # uncomment to avoid export models
+    # models = TRUE)
+    models = FALSE) # uncomment to avoid export models
   
   print(res)
   save(res, file = job.file)
