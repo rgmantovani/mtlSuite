@@ -1,16 +1,19 @@
 Package: mtlSuite
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Title: Meta-learning suite for experiments with classification and regression tasks in R.
+Version: 0.0.1
+Authors@R:person("Rafael", "Gomes Mantovani", email = "rgmantovani@gmail.com", role = c("aut", "cre"))
+Description: 'mtlSuite' is a general suite for experiments with meta-learning datasets, based on mlr package.
 Depends: 
   R (>= 3.2),
   mlr (>= 2.9),
   checkmate,
   parallelMap,
   BBmisc,
-  FSelector
+  FSelector,
+  optparse
 Suggests: setwidth
-License: What license is it under?
+License: LGPL-3
 Encoding: UTF-8
+URL: https://github.com/rgmantovani/mtlSuite
+BugReports: https://github.com/rgmantovani/mtlSuite/issues
 LazyData: true
