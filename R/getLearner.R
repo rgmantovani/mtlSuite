@@ -17,6 +17,8 @@ isFilterFeatSel = function(feat.sel) {
 #--------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------
 
+# TODO: dynamic rates
+
 setBalancingMethod = function(learner, balancing) {
 
   if(balancing == "smote") {
@@ -39,7 +41,8 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
     stop(" @ mlr package cannot handle tuning and feature selection wrapped to the same learner")
   }
 
-  lrn = makeLearner(algo)
+  lrn = mlr::makeLearner(algo)
+  lrn = mlr::makeRemoveConstantFeaturesWrapper(learner = lrn)
 
   if(feat.sel != "none") {
 
@@ -54,7 +57,7 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
         FILTER = "information.gain"
       }
 
-      lrn = makeFilterWrapper(learner = lrn, fw.method = FILTER, fw.perc = FILTER.PERC)
+      lrn = mlr::makeFilterWrapper(learner = lrn, fw.method = FILTER, fw.perc = FILTER.PERC)
 
     } else {
 
@@ -66,8 +69,8 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
         feat.ctrl  = makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, beta = BETA)
       }
 
-      inner = makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = FALSE)
-      lrn = makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
+      inner = mlr::makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = FALSE)
+      lrn = mlr::makeFeatSelWrapper(learner = lrn, resampling = inner, control = feat.ctrl,
         measures = list(rmse), show.info = TRUE)
     }
   }
@@ -75,8 +78,8 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
   if(tuning != "none") {
     
     tn.par.set = getHyperSpace(learner = algo, p = getTaskNFeats(task), n = getTaskSize(task))
-    tn.ctrl    = makeTuneControlRandom(maxit = BUDGET.TUNING)
-    tn.inner   = makeResampleDesc(method = "CV", iters = INNER.FOLDS.TUNING, stratify = FALSE)
+    tn.ctrl    = mlr::makeTuneControlRandom(maxit = BUDGET.TUNING)
+    tn.inner   = mlr::makeResampleDesc(method = "CV", iters = INNER.FOLDS.TUNING, stratify = FALSE)
     
     lrn = makeTuneWrapper(learner = lrn, resampling = tn.inner, control = tn.ctrl, 
       measures = list(rmse), par.set = tn.par.set, show.info = TRUE)
@@ -96,6 +99,7 @@ getClassifLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tunin
   }
 
   lrn = makeLearner(algo, predict.type = "prob")
+  lrn = mlr::makeRemoveConstantFeaturesWrapper(learner = lrn)
  
   if(length(getTaskClassLevels(task)) == 2) {
     measures = list(auc)

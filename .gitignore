@@ -2,15 +2,14 @@
 .Rhistory
 .RData
 
-data/classif_autodt_102d_95.arff
-data/classif_svm_169d_95_average.arff
-data/regr_all.arff
-data/regr_single.arff
+data/classif*
+data/regr*
+data/params*
 
-createAutoDTMetaBases.R
 featselExploration.R
 
 tests/
+info/
 testing.R
 
 *.RData
