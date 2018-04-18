@@ -6,7 +6,7 @@ data/classif*
 data/regr*
 data/params*
 
-featselExploration.R
+parseTesting.R
 
 tests/
 info/

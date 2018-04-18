@@ -49,9 +49,9 @@ runMetaLearning = function(parsed.obj, task.type) {
       feat = parsed.obj$feat.sel, tuning = parsed.obj$tuning)
 
     if(parsed.obj$resamp == "LOO") {
-      rdesc = makeResampleDesc(method = "LOO")
+      rdesc = mlr::makeResampleDesc(method = "LOO")
     } else {
-      rdesc = makeResampleDesc(method = "CV", iters = 10, stratify = FALSE)
+      rdesc = mlr::makeResampleDesc(method = "CV", iters = 10, stratify = FALSE)
     }
 
   } else {
@@ -69,9 +69,9 @@ runMetaLearning = function(parsed.obj, task.type) {
     }
 
     if(parsed.obj$resamp == "LOO") {
-      rdesc = makeResampleDesc(method = "LOO")
+      rdesc = mlr::makeResampleDesc(method = "LOO")
     } else {
-      rdesc = makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
+      rdesc = mlr::makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
     }
   }
   
@@ -79,12 +79,11 @@ runMetaLearning = function(parsed.obj, task.type) {
   # Running and saving job
   #--------------------------
   
-  res = benchmark(learners = lrns, tasks = tasks, resamplings = rdesc, measures = measures, 
+  res = mlr::benchmark(learners = lrns, tasks = tasks, resamplings = rdesc, measures = measures, 
     show.info = TRUE, keep.pred = TRUE, models = parsed.obj$models) 
   
   print(res)
   save(res, file = job.file)
-
 }
 
 # -------------------------------------------------------------------------------------------------

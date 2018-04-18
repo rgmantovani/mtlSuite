@@ -13,9 +13,9 @@
     task.id = paste0(id,"_", colnames(data)[ncol(data)-(n-i)])
 
     if(type == "regr") {
-      task = makeRegrTask(id = task.id, data = sub.data, target = "Class")
+      task = mlr::makeRegrTask(id = task.id, data = sub.data, target = "Class")
     } else {
-      task = makeClassifTask(id = task.id, data = sub.data, target = "Class")
+      task = mlr::makeClassifTask(id = task.id, data = sub.data, target = "Class")
     }
   })
 
@@ -32,7 +32,7 @@ getRegrTask = function(data, id) {
 
   if(n == 1) {
     cat(" @ Unique Class attribute found - Single regression task\n")
-    task = makeRegrTask(id = id, data = data[,-1], target = "Class")
+    task = mlr::makeRegrTask(id = id, data = data[,-1], target = "Class")
     tasks = list(task)
   } else {
     cat(" @ Several \"Class\" attributes found - Multi-target regression tasks\n")
@@ -51,7 +51,7 @@ getClassifTask = function(data, id) {
 
   if(n == 1) {
     cat(" @ Unique Class attribute found - Single classification task\n")
-    task = makeClassifTask(id = id, data = data[,-1], target = "Class")
+    task = mlr::makeClassifTask(id = id, data = data[,-1], target = "Class")
     tasks = list(task)
   } else {
     cat(" @ Several \"Class\" attributes found - Multi-target classification tasks\n")

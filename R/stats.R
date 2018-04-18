@@ -6,7 +6,9 @@ wilcoxonTest = function(x1, x2, conf = 0.90) {
   alpha = 1 - conf
   obj = wilcox.test(x = x1, y = x2, paired = TRUE)
   p.value = obj$p.value
+
   return(p.value < alpha)
+
 }
 
 # -------------------------------------------------------------------------------------------------

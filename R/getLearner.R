@@ -18,15 +18,14 @@ isFilterFeatSel = function(feat.sel) {
 #--------------------------------------------------------------------------------------------------
 
 # TODO: dynamic rates
-
 setBalancingMethod = function(learner, balancing) {
 
   if(balancing == "smote") {
-    learner = makeSMOTEWrapper(learner = learner, sw.rate = SMOTE.RATE)
+    learner = mlr::makeSMOTEWrapper(learner = learner, sw.rate = SMOTE.RATE)
   } else if(balancing == "oversamp") {
-    learner = makeOversampleWrapper(learner, osw.rate = OVER.RATE)
+    learner = mlr::makeOversampleWrapper(learner, osw.rate = OVER.RATE)
   } else if(balancing == "undersamp") {
-    learner = makeUndersampleWrapper(learner, usw.rate = UNDER.RATE)
+    learner = mlr::makeUndersampleWrapper(learner, usw.rate = UNDER.RATE)
   } 
 
   return(learner)
@@ -63,10 +62,11 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
 
    
       if(feat.sel == "ga") {
-        feat.ctrl = makeFeatSelControlGA(mu = MU.SIZE, lambda = LAMBDA.SIZE, crossover.rate = 0.5, 
-          mutation.rate = 0.05, maxit = GA.MAXIT)
+        feat.ctrl = mlr::makeFeatSelControlGA(mu = MU.SIZE, lambda = LAMBDA.SIZE, 
+          crossover.rate = 0.5, mutation.rate = 0.05, maxit = GA.MAXIT)
       } else {
-        feat.ctrl  = makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, beta = BETA)
+        feat.ctrl = mlr::makeFeatSelControlSequential(method = feat.sel, alpha = ALPHA, 
+          beta = BETA)
       }
 
       inner = mlr::makeResampleDesc(method = "CV", iters = INNER.FOLDS.FEATSEL, stratify = FALSE)
@@ -77,11 +77,12 @@ getRegrLearner = function(algo, task=NULL, norm=FALSE, feat.sel="none", tuning="
 
   if(tuning != "none") {
     
-    tn.par.set = getHyperSpace(learner = algo, p = getTaskNFeats(task), n = getTaskSize(task))
-    tn.ctrl    = mlr::makeTuneControlRandom(maxit = BUDGET.TUNING)
-    tn.inner   = mlr::makeResampleDesc(method = "CV", iters = INNER.FOLDS.TUNING, stratify = FALSE)
+    tn.par.set = getHyperSpace(learner = algo, p = mlr::getTaskNFeats(task), 
+      n = mlr::getTaskSize(task))
+    tn.ctrl = mlr::makeTuneControlRandom(maxit = BUDGET.TUNING)
+    tn.inner = mlr::makeResampleDesc(method = "CV", iters = INNER.FOLDS.TUNING, stratify = FALSE)
     
-    lrn = makeTuneWrapper(learner = lrn, resampling = tn.inner, control = tn.ctrl, 
+    lrn = mlr::makeTuneWrapper(learner = lrn, resampling = tn.inner, control = tn.ctrl, 
       measures = list(rmse), par.set = tn.par.set, show.info = TRUE)
   }
 
