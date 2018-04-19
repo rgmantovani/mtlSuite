@@ -61,7 +61,7 @@ If you wish to save all the models generated during the execution, so you should
 ```R
 # example:
 # R CMD BATCH --no-save --no-restore '--args'--datafile="toy_iris" --algo="classif.rpart" --norm="FALSE" \ 
---feat.sel="none" --resamp="10-CV" --tuning="none" --balancing="smote" --seed="1" --models mainMTL.R output.log &
+#--feat.sel="none" --resamp="10-CV" --tuning="none" --balancing="smote" --seed="1" --models mainMTL.R output.log &
 ```
 
 The resultant files will be saved at the ```output``` sub-directory: one file with performances, one file with predictions, and one file with the optimization path (if tuning is selected).
