@@ -71,10 +71,11 @@ The resultant files will be saved at the ```output``` sub-directory: one file wi
 [01] B. Bischl, Michel Lang, Lars Kotthoff, Julia Schiffner, Jakob Richter, Erich Studerus, Giuseppe Casalicchio, Zachary Jones. 
 "mlr: Machine Learning in R". Journal of Machine Learning in R, v.17, n.170, 2016, pgs 1-5. URL: https://github.com/mlr-org/mlr.
 
-[02] I. Kononenko. "Estimating attributes: Analysis and extensions of RELIEF". Machine Learning: ECML-94. Lecture Notes in Computer Science. Springer, Berlin, Heidelberg. 784: 171–182. Available [here}(https://link.springer.com/chapter/10.1007%2F3-540-57868-4_57).
+[02] I. Kononenko. "Estimating attributes: Analysis and extensions of RELIEF". Machine Learning: ECML-94. Lecture Notes in Computer Science. Springer, Berlin, Heidelberg. 784: 171–182. Available [here](https://link.springer.com/chapter/10.1007%2F3-540-57868-4_57).
  
 [03] N. V. Chawla, K. W. Bowyer, L. O. Hall, W. P. Kegelmeyer. SMOTE: Synthetic Minority Over-sampling Technique. Journal of Artificial Intelligence Research, v.16, n.1, 2002 pgs 321-357. Available [here](https://arxiv.org/abs/1106.1813). 
 
 ### Contact
 
-Rafael Gomes Mantovani (rgmantovani@gmail.com) University of São Paulo - São Carlos, Brazil.
+Rafael Gomes Mantovani (rgmantovani@gmail.com) 
+University of São Paulo - São Carlos-SP, Brazil.
