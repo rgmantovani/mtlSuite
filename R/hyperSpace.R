@@ -4,7 +4,7 @@
 getHyperSpace = function(learner, ...) {
 
   name = gsub(pattern="regr.|classif.|.featsel|.preproc|.imputed", replacement="", x=learner)
-  substring(name, 1, 1) = toupper(substring(name, 1, 1)) 
+  substring(name, 1, 1) = toupper(substring(name, 1, 1))
   fn.space = get(paste0("get", name , "Space"))
   par.set = fn.space(...)
 
@@ -39,13 +39,13 @@ getRpartSpace = function(...) {
   args = list(...)
   par.set = makeParamSet(
     makeIntegerParam(id = "cp", lower = -4, upper = -1, trafo = function(x) 10^x),
-    makeIntegerParam(id = "minsplit", lower = 1, upper = min(7, floor(log2(args$n))), 
+    makeIntegerParam(id = "minsplit", lower = 1, upper = min(7, floor(log2(args$n))),
       trafo = function(x) 2^x),
-    makeIntegerParam(id = "minbucket", lower = 0, upper = min(6, floor(log2(args$n))), 
+    makeIntegerParam(id = "minbucket", lower = 0, upper = min(6, floor(log2(args$n))),
       trafo = function(x) 2^x),
     makeIntegerParam(id = "maxdepth", lower = 1, upper = 30)
   )
-  return(par.set)  
+  return(par.set)
 }
 
 # -------------------------------------------------------------------------------------------------
@@ -109,6 +109,34 @@ getNaiveBayesSpace = function(...) {
 
 getLogregSpace = function(...) {
   par.set = makeParamSet()
+  return(par.set)
+}
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
+getJ48Space = function(...) {
+  par.set = makeParamSet(
+    makeLogicalParam(id = "R", default = FALSE),
+    makeNumericParam(id = "C", default = 0.25, lower = 0.001, upper = 0.5,
+      requires = quote(R == FALSE)),
+    makeIntegerParam(id = "M", default = 2L, lower = 1L, upper = 50L),
+    makeIntegerParam(id = "N", default = 3L, lower = 2L, upper = 10,
+      requires = quote(R == TRUE))
+  )
+  return(par.set)
+}
+
+# -------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------
+
+getNnetSpace = function(...) {
+  par.set = makeParamSet(
+     makeIntegerParam(id = "size", default = 3L, lower = 0L),
+     makeIntegerParam(id = "maxit", default = 100L, lower = 1L),
+     makeNumericParam(id = "rang", default = 0.7),
+     makeLogicalParam(id = "Hess", default = FALSE)
+  )
   return(par.set)
 }
 
