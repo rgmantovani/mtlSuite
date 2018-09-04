@@ -5,6 +5,7 @@
 data/classif*
 data/regr*
 data/params*
+data/baselines*
 
 parseTesting.R
 
