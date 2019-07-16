@@ -51,7 +51,7 @@ R CMD BATCH --no-save --no-restore '--args' --datafile=<datafile> --algo=<algo> 
   --resamp=<resamp> --tuning=<tuning> --balancing=<balancing> --seed=<seed> mainMTL.R <output.file>
 # example:
 # R CMD BATCH --no-save --no-restore '--args'--datafile="toy_iris" --algo="classif.rpart" --norm="FALSE" \ 
---feat.sel="none" --resamp="10-CV" --tuning="none" --balancing="smote" --seed="1" mainMTL.R output.log &
+# --feat.sel="none" --resamp="10-CV" --tuning="none" --balancing="smote" --seed="1" mainMTL.R output.log &
 ```
 
 This example will run the 'rpart' classification algorithm on the ``toy_iris`` data, not scaling it, not performing feature selection, 
@@ -75,7 +75,23 @@ The resultant files will be saved at the ```output``` sub-directory: one file wi
  
 [03] N. V. Chawla, K. W. Bowyer, L. O. Hall, W. P. Kegelmeyer. SMOTE: Synthetic Minority Over-sampling Technique. Journal of Artificial Intelligence Research, v.16, n.1, 2002 pgs 321-357. Available [here](https://arxiv.org/abs/1106.1813). 
 
+If you would like to use our code, please cite it as:
+
+```
+@article{ ,
+   title = "A meta-learning recommender system for hyperparameter tuning: Predicting when tuning improves SVM classifiers",
+   journal = "Information Sciences",
+   volume = "501",
+   pages = "193 - 221",
+   year = "2019",
+   issn = "0020-0255",
+   doi = "https://doi.org/10.1016/j.ins.2019.06.005",
+   url = "http://www.sciencedirect.com/science/article/pii/S002002551930533X",
+   author = "Rafael G. Mantovani and Andr{'e} L.D. Rossi and Edesio Alcoba{\c c}a and Joaquin Vanschoren and Andr{\'e} C.P.L.F. de Carvalho",
+}
+```
+
 ### Contact
 
 Rafael Gomes Mantovani (rgmantovani@gmail.com) 
-University of São Paulo - São Carlos-SP, Brazil.
+Federal Technology University - Paraná - Apucarana - PR, Brazil.
