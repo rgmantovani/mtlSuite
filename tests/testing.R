@@ -1,7 +1,7 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-devtools::load_all()
+devtools::load_all("../")
 
 mySeed = 42
 parsed.obj = NULL
@@ -23,7 +23,7 @@ parsed.obj$resamp    = "CV"
 parsed.obj$tuning    = "none"
 parsed.obj$balancing = "none"
 parsed.obj$models    = FALSE
-parsed.obj$norm      = FALSE
+parsed.obj$norm      = TRUE
 
 task.type = "regression"
 
@@ -31,7 +31,7 @@ task.type = "regression"
 # creating output dir
 #--------------------------
 
-output.dir = paste("output", parsed.obj$datafile, parsed.obj$algo, sep="/")
+output.dir = paste("../output", parsed.obj$datafile, parsed.obj$algo, sep="/")
 output.dir = paste(output.dir, ifelse(parsed.obj$norm, "with_norm", "no_norm"), sep="/")
 output.dir = paste(output.dir, parsed.obj$feat.sel, parsed.obj$resamp, parsed.obj$tuning,
   parsed.obj$balancing, parsed.obj$seed, sep="/")
@@ -52,7 +52,18 @@ if(file.exists(job.file)) {
 # reading data
 #--------------------------
 
-data = readData(datafile = parsed.obj$datafile, norm = parsed.obj$norm)
+# data = readData(datafile = parsed.obj$datafile, norm = parsed.obj$norm)
+
+cat(paste0(" @ Loading dataset: ", parsed.obj$datafile, "\n"))
+data = farff::readARFF(path=paste0("../data/", parsed.obj$datafile,".arff"))
+
+# data normalization
+if(parsed.obj$norm ) {
+  # https://mlr.mlr-org.com/reference/normalizeFeatures.html
+  class.id = grep(x=colnames(data), pattern="Class")
+  data = mlr::normalizeFeatures(obj=data, target=colnames(data)[class.id],
+       method = "standardize")
+}
 
 #--------------------------
 # setting up experiment
