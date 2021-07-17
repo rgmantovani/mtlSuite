@@ -11,7 +11,6 @@ parseTesting.R
 
 tests/
 info/
-testing.R
 
 *.RData
 *.csv
@@ -19,3 +18,4 @@ testing.R
 *.zip
 *.log
 *.sh
+*.arff
