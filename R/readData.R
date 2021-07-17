@@ -1,19 +1,22 @@
 # -------------------------------------------------------------------------------------------------
 # -------------------------------------------------------------------------------------------------
 
-readData = function(datafile, norm = FALSE) {
+readData = function(datafile, norm=FALSE) {
 
   cat(paste0(" @ Loading dataset: ", datafile, "\n"))
-  data = foreign::read.arff(paste0("data/", datafile, ".arff"))
+  data = farff::readARFF(path=paste0("data/", datafile,".arff"))
 
-  # data norm (mean zero, variance one)
+  # data normalization
   if(norm) {
-    for(i in colnames(data)[2:(ncol(data)-4)]) {
-      data[,i] = RSNNS::normalizeData(data[,i], type="norm")
-    }
+    # https://mlr.mlr-org.com/reference/normalizeFeatures.html
+    class.id = grep(x=colnames(data), pattern="Class")
+    ret = mlr::normalizeFeatures(obj=data, target=colnames(data)[class.id],
+         method = "standardize")
+  } else {
+    ret = data
   }
 
-  return(data)
+  return(ret)
 }
 
 # -------------------------------------------------------------------------------------------------
