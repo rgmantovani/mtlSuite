@@ -9,7 +9,6 @@ data/baselines*
 
 parseTesting.R
 
-tests/
 info/
 
 *.RData
@@ -17,5 +16,4 @@ info/
 *.txt
 *.zip
 *.log
-*.sh
 *.arff
