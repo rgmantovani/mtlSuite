@@ -12,9 +12,9 @@ runMetaLearning = function(parsed.obj, task.type) {
 
   output.dir = paste("output", parsed.obj$datafile, parsed.obj$algo, sep="/")
   output.dir = paste(output.dir, ifelse(parsed.obj$norm, "with_norm", "no_norm"), sep="/")
-  output.dir = paste(output.dir, parsed.obj$feat.sel, parsed.obj$resamp, parsed.obj$tuning, 
+  output.dir = paste(output.dir, parsed.obj$feat.sel, parsed.obj$resamp, parsed.obj$tuning,
     parsed.obj$balancing, parsed.obj$seed, sep="/")
-  
+
   if(!dir.exists(output.dir)) {
     dir.create(path = output.dir, recursive = TRUE)
     cat(paste0(" - Creating dir: ", output.dir, "\n"))
@@ -38,14 +38,14 @@ runMetaLearning = function(parsed.obj, task.type) {
   #--------------------------
 
   if(task.type == "regression") {
-    
+
     if(parsed.obj$balancing != "none") {
       stop("There is no data balancing option available for regression tasks.\n")
     }
 
     tasks    = getRegrTask(data = data, id = parsed.obj$datafile)
-    measures = list(rmse, timetrain, timepredict)
-    lrns     = getRegrLearner(task = tasks[[1]], algo = parsed.obj$algo, 
+    measures = list(rmse, mse, mae, rsq, spearmanrho, timetrain, timepredict)
+    lrns     = getRegrLearner(task = tasks[[1]], algo = parsed.obj$algo,
       feat = parsed.obj$feat.sel, tuning = parsed.obj$tuning)
 
     if(parsed.obj$resamp == "LOO") {
@@ -55,11 +55,11 @@ runMetaLearning = function(parsed.obj, task.type) {
     }
 
   } else {
-  
+
     tasks    = getClassifTask(data = data, id = parsed.obj$datafile)
     measures = list(acc, ber, timetrain, timepredict)
-    lrns     = getClassifLearner(task = tasks[[1]], algo = parsed.obj$algo, 
-      feat = parsed.obj$feat.sel, tuning = parsed.obj$tuning, 
+    lrns     = getClassifLearner(task = tasks[[1]], algo = parsed.obj$algo,
+      feat = parsed.obj$feat.sel, tuning = parsed.obj$tuning,
       balancing = parsed.obj$balancing)
 
     if(length(getTaskClassLevels(tasks[[1]])) == 2) {
@@ -74,14 +74,14 @@ runMetaLearning = function(parsed.obj, task.type) {
       rdesc = mlr::makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
     }
   }
-  
+
   #--------------------------
   # Running and saving job
   #--------------------------
-  
-  res = mlr::benchmark(learners = lrns, tasks = tasks, resamplings = rdesc, measures = measures, 
-    show.info = TRUE, keep.pred = TRUE, models = parsed.obj$models) 
-  
+
+  res = mlr::benchmark(learners = lrns, tasks = tasks, resamplings = rdesc, measures = measures,
+    show.info = TRUE, keep.pred = TRUE, models = parsed.obj$models)
+
   print(res)
   save(res, file = job.file)
 }
