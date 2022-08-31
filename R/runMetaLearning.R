@@ -37,6 +37,7 @@ runMetaLearning = function(parsed.obj, task.type) {
   # setting up experiment
   #--------------------------
 
+  # regression tasks
   if(task.type == "regression") {
 
     if(parsed.obj$balancing != "none") {
@@ -50,10 +51,15 @@ runMetaLearning = function(parsed.obj, task.type) {
 
     if(parsed.obj$resamp == "LOO") {
       rdesc = mlr::makeResampleDesc(method = "LOO")
-    } else {
+    } else if(parsed.obj$resamp == "10-CV") {
       rdesc = mlr::makeResampleDesc(method = "CV", iters = 10, stratify = FALSE)
+    } else if(parsed.obj$resamp == "5-CV") {
+      rdesc = mlr::makeResampleDesc(method = "CV", iters = 5, stratify = FALSE)
+    } else {
+      rdesc = mlr::makeResampleDesc(method = "CV", iters = 3, stratify = FALSE)
     }
 
+  # classification tasks
   } else {
 
     tasks    = getClassifTask(data = data, id = parsed.obj$datafile)
@@ -70,8 +76,12 @@ runMetaLearning = function(parsed.obj, task.type) {
 
     if(parsed.obj$resamp == "LOO") {
       rdesc = mlr::makeResampleDesc(method = "LOO")
-    } else {
+    } else if(parsed.obj$resamp == "10-CV") {
       rdesc = mlr::makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
+    } else if(parsed.obj$resamp == "5-CV") {
+      rdesc = mlr::makeResampleDesc(method = "CV", iters = 5, stratify = TRUE)
+    } else {
+      rdesc = mlr::makeResampleDesc(method = "CV", iters = 3, stratify = TRUE)
     }
   }
 

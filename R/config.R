@@ -11,7 +11,7 @@ AVAILABLE.CLASS = c("classif.svm", "classif.rpart", "classif.randomForest", "cla
   "classif.logreg", "classif.gausspr", "classif.naiveBayes", "classif.xgboost", "classif.C50",
   "classif.J48", "classif.nnet")
 
-AVAILABLE.RESAMPLING = c("LOO", "10-CV")
+AVAILABLE.RESAMPLING = c("LOO", "10-CV", "5-CV", "3-CV")
 
 # feature selection options
 RELIEF.CONFS = paste("relief", seq(from = 0.05, to = 1, by = 0.05), sep=".")

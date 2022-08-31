@@ -10,22 +10,22 @@ parsed.obj$seed      = mySeed
 set.seed(parsed.obj$seed)
 options(mlr.debug.seed = parsed.obj$seed)
 
-parsed.obj$datafile = "workload_CREATION_-_QUERIES_WORKLOAD_src_id_5_target_intel_avg_index_time"
+parsed.obj$datafile = "toy_iris"
 
-parsed.obj$algo    = "regr.randomForest"
-# parsed.obj$algo    = "regr.lm"
+parsed.obj$algo    = "classif.C50"
 
 # AVAILABLE.REGR = c("regr.svm", "regr.rpart", "regr.randomForest", "regr.kknn", "regr.lm",
   # "regr.gausspr", "regr.xgboost")
 
 parsed.obj$feat.sel  = "none"
-parsed.obj$resamp    = "CV"
+parsed.obj$resamp    = "10-CV" #5-CV
 parsed.obj$tuning    = "none"
 parsed.obj$balancing = "none"
 parsed.obj$models    = FALSE
 parsed.obj$norm      = TRUE
 
-task.type = "regression"
+# task.type = "regression"
+task.type = "classification"
 
 #--------------------------
 # creating output dir
@@ -82,8 +82,12 @@ if(task.type == "regression") {
 
   if(parsed.obj$resamp == "LOO") {
     rdesc = mlr::makeResampleDesc(method = "LOO")
-  } else {
+  } else if(parsed.obj$resamp == "10-CV") {
     rdesc = mlr::makeResampleDesc(method = "CV", iters = 10, stratify = FALSE)
+  } else if(parsed.obj$resamp == "5-CV") {
+    rdesc = mlr::makeResampleDesc(method = "CV", iters = 5, stratify = FALSE)
+  } else {
+    rdesc = mlr::makeResampleDesc(method = "CV", iters = 3, stratify = FALSE)
   }
 
 } else {
@@ -102,8 +106,12 @@ if(task.type == "regression") {
 
   if(parsed.obj$resamp == "LOO") {
     rdesc = mlr::makeResampleDesc(method = "LOO")
-  } else {
+  } else if(parsed.obj$resamp == "10-CV") {
     rdesc = mlr::makeResampleDesc(method = "CV", iters = 10, stratify = TRUE)
+  } else if(parsed.obj$resamp == "5-CV") {
+    rdesc = mlr::makeResampleDesc(method = "CV", iters = 5, stratify = TRUE)
+  } else {
+    rdesc = mlr::makeResampleDesc(method = "CV", iters = 3, stratify = TRUE)
   }
 }
 
